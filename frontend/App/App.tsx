@@ -13,6 +13,7 @@ const { PKPass } = require("passkit-generator");
 var fs = require('file-system')
 var path = require('path')
 var axios = require('axios')
+const https = require('https');
 
 
 /////////
@@ -25,12 +26,47 @@ function App(): JSX.Element {
   const [title, setTitle] = useState("")
 
 
+///////////////
+// Functions //
+///////////////
 
+  function generatePass(){
+    let params = [
+      "qrText": self.qrText,
 
+    ]
 
-  //////////
-  // Main //
-  //////////
+    // Runs HTTP GET Request
+    https.get( 
+      // Function Location
+      "https://console.firebase.google.com/project/apple-pass-test/overview",
+
+      // Upon Response do...
+      (resp) => {
+        let data = ''
+
+        // On Retreiving Data, Add it 
+        resp.on('data', (chunk) => {
+          data += chunk
+        })
+
+        // On End
+        resp.on('end', () => {
+          console.log(JSON.parse(data).explanation)
+        })
+      }
+    )
+    // Error Handling
+    .on("error", )
+  }
+
+  function downloadPass(){
+
+  }
+
+//////////
+// Main //
+//////////
   return (
     <SafeAreaView>
       <StatusBar

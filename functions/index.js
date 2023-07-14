@@ -1,19 +1,23 @@
+// PKPass is the framework that will allow us to create a Pass in JS
 const { PKPass } = require('passkit-generator')
+
+// We are Using Firebase Functions (AWS LAmbda but Firebased) For Deployment
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
+const { storage } = require('firebase-admin')
+// To run this file use `firebase deploy --only functions` in the parent directory
 
 var fs = require('file-system')
 var path = require('path')
 var axios = require('axios')
-const { storage } = require('firebase-admin')
 
-// In the Terminal, run `node index.js` to run the program
 
+// Gives Admin Firebase Permissions to begin the program
 admin.initializeApp({
-    storageBucket: "your-storage-bucket"
+    storageBucket: "your-storage-bucket"    // Specifies Program Storage
 });
 
-// This Variable will be the User's Cloud Storage
+// This Variable will be the Firebase Cloud Storage
 var storageRef = admin.storage().bucket()
 
 exports.pass = functions.https.onRequest((request, response) => {
@@ -95,7 +99,7 @@ exports.pass = functions.https.onRequest((request, response) => {
         // Creates Buffer version of Pass
         const bufferData = newPass.getAsBuffer()
 
-        // Saves the BufferData inside the User's Apple Storage
+        // Saves the BufferData inside the Firebase Storage
         storageRef.file("passes/Coupon.pkpass")
             .save(bufferData, (error) => {
                 if (!error){

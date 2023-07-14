@@ -21,7 +21,10 @@ exports.pass = functions.https.onRequest((request, response) => {
     // Create a PKPass Object that can be used in JS via Passkit-Generator
     PKPass.from(
     {
-        model: "./model/Coupon.pass",   // Path to Pass Directory
+        // Path to Pass Directory
+        model: "https://console.firebase.google.com/project/apple-pass-test/overview",   
+
+        // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 
             wwdr: fs.fs.readFileSync("./certs/wwrd.pem"),
             signerCert: fs.fs.readFileSync("./certs/signerCert.pem"),

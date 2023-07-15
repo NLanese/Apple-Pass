@@ -30,35 +30,46 @@ function App(): JSX.Element {
 // Functions //
 ///////////////
 
-  function generatePass(){
-    let params = [
-      "qrText": self.qrText,
-
-    ]
+  // Sends the POST Request to Firebase Function to create the Apple Pass
+  // via HTTP
+  function generatePassHttp(){
+    // const options = {
+    //   hostname: "console.firebase.google.com",
+    //   path: "/project/apple-pass-test/overview",
+    //   method: "POST",
+    //   Headers: {
+    //     'Content-Type': 'application/json',
+    //     'Content-Length' : data.length
+    //   }
+    // }
 
     // Runs HTTP GET Request
-    https.get( 
-      // Function Location
-      "https://console.firebase.google.com/project/apple-pass-test/overview",
+  //   https.get( 
+  //     // Function Location
+  //     "https://console.firebase.google.com/project/apple-pass-test/overview",
 
-      // Upon Response do...
-      (resp) => {
-        let data = ''
+  //     // Upon Response do...
+  //     (resp) => {
+  //       let data = ''
 
-        // On Retreiving Data, Add it 
-        resp.on('data', (chunk) => {
-          data += chunk
-        })
+  //       // On Retreiving Data, Add it 
+  //       resp.on('data', (chunk) => {
+  //         data += chunk
+  //       })
 
-        // On End
-        resp.on('end', () => {
-          console.log(JSON.parse(data).explanation)
-        })
-      }
-    )
-    // Error Handling
-    .on("error", )
+  //       // On End
+  //       resp.on('end', () => {
+  //         console.log(JSON.parse(data).explanation)
+  //       })
+  //     }
+  //   )
+  //   // Error Handling
+  //   .on("error", )
   }
+
+  // Sends the POST Request to Firebase Function to create the Apple Pass
+  // via axios
+  function generatePassAxios(){
 
   function downloadPass(){
 

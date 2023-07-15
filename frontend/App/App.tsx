@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import {
-  SafeAreaView,
   StatusBar,
   Text,
   View,
@@ -129,7 +128,7 @@ let date
 // Main //
 //////////
   return (
-    <SafeAreaView>
+    <View>
       <StatusBar
         barStyle={'dark-content'}
       />
@@ -154,7 +153,7 @@ let date
           onPress={() => generatePassAxios()}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

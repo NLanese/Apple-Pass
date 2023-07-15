@@ -5,6 +5,7 @@ import {
   StatusBar,
   Text,
   View,
+  Button
 } from 'react-native';
 import { TextInput } from 'react-native';
 
@@ -76,7 +77,7 @@ let date
 
   // Sends the POST Request to Firebase Function to create the Apple Pass
   // via axios
-  function generatePassAxios(){
+  async function generatePassAxios(){
     const data = {
       body: {
 
@@ -112,6 +113,12 @@ let date
 
       }
     }
+    try{
+      const response = await axios.post("https://console.firebase.google.com/project/apple-pass-test/overview", data)
+      console.log(response)
+    } catch (err){
+      console.error(err)
+    }
   }
 
   function downloadPass(){
@@ -139,6 +146,12 @@ let date
          <Text style={{marginTop: 10}}>Title</Text>
          <TextInput style={{padding: 5, borderWidth: 1}}
           onChangeText={(content) => setTitle(content)}
+        />
+      </View>
+      <View style={{marginTop: 45}}>
+        <Button
+          title='Add To Wallet'
+          onPress={() => generatePassAxios()}
         />
       </View>
     </SafeAreaView>

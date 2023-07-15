@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import {
   SafeAreaView,
@@ -21,9 +21,16 @@ const https = require('https');
 /////////
 function App(): JSX.Element {
 
+let date
+
+  useEffect(() => {
+    date = new Date()
+  }, [])
+
   // Pass Details
   const [name, setName] = useState("")
   const [title, setTitle] = useState("")
+  const [years, setYears] = useState("")
 
 
 ///////////////
@@ -70,6 +77,42 @@ function App(): JSX.Element {
   // Sends the POST Request to Firebase Function to create the Apple Pass
   // via axios
   function generatePassAxios(){
+    const data = {
+      body: {
+
+        // Primary Fields for Pass 
+        primary: {
+          label: "Name",
+          value: name
+        },
+
+        // Secondary Fields for PAss
+        secondary: [
+          {
+            label: "Title",
+            value: title
+          },
+          {
+            label: "Years in Position",
+            value: years
+          }
+        ],
+
+        // Auxiliary Fields for Pass
+        auxiliary: [
+          {
+            label: "Expires",
+            value: "12 - 31 - 30"
+          },
+          {
+            label: "Date Aquired",
+            value: `${date.getMonth() + 1} - ${date.getYear()}`
+          }
+        ],
+
+      }
+    }
+  }
 
   function downloadPass(){
 

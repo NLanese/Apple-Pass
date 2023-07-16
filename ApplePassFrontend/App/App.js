@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import {
-  StatusBar,
-  Text,
-  View,
-  Button
-} from 'react-native';
+import { View, Text, Button } from 'react-native';
 import { TextInput } from 'react-native';
 
 
@@ -20,7 +15,7 @@ const https = require('https');
 /////////
 // APP //
 /////////
-function App(): JSX.Element {
+function App(){
 
 let date
 
@@ -130,9 +125,6 @@ let date
 //////////
   return (
     <View>
-      <StatusBar
-        barStyle={'dark-content'}
-      />
       <View>
         <Text style={{marginTop: 20, fontSize: 20, fontWeight: 700, textAlign: 'center'}}>
           Enter information to make a pass

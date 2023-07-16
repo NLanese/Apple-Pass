@@ -141,6 +141,10 @@ function App(){
          <TextInput style={{padding: 5, borderWidth: 1}}
           onChangeText={(content) => setTitle(content)}
         />
+        <Text style={{marginTop: 10}}>Years</Text>
+         <TextInput style={{padding: 5, borderWidth: 1}}
+          onChangeText={(content) => setYears(content)}
+        />
       </View>
       <View style={{marginTop: 45}}>
         <Button

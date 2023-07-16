@@ -27,7 +27,7 @@ exports.pass = functions.https.onRequest((request, response) => {
     {
         // Path to Pass Directory
         
-        model: "gs://apple-pass-test.appspot.com/model",  
+        model: "gs://apple-pass-test.appspot.com/model/model.pkpass",
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 

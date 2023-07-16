@@ -26,7 +26,7 @@ exports.pass = functions.https.onRequest((request, response) => {
     PKPass.from(
     {
         // Path to Pass Directory
-        model: "https://console.firebase.google.com/project/apple-pass-test/overview",   
+        model: "https://us-central1-apple-pass-test.cloudfunctions.net/pass/model",  
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 

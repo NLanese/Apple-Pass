@@ -111,7 +111,7 @@ function App(){
       }
     }
     try{
-      const response = await axios.post("https://console.firebase.google.com/project/apple-pass-test/overview", data)
+      const response = await axios.post("https://us-central1-apple-pass-test.cloudfunctions.net/pass", data)
       console.log(response)
     } catch (err){
       console.error(err)

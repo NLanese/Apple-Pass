@@ -26,7 +26,8 @@ exports.pass = functions.https.onRequest((request, response) => {
     PKPass.from(
     {
         // Path to Pass Directory
-        model: "https://us-central1-apple-pass-test.cloudfunctions.net/pass/model",  
+        
+        model: "gs://apple-pass-test.appspot.com/model",  
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 

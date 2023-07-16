@@ -30,9 +30,9 @@ exports.pass = functions.https.onRequest((request, response) => {
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 
-            wwdr: fs.fs.readFileSync("./certs/wwrd.pem"),
-            signerCert: fs.fs.readFileSync("./certs/signerCert.pem"),
-            signerKey: fs.fs.readFileSync("./certs/signerKey.pem"),
+            wwdr: fs.readFileSync(path.join(__dirname, 'certs/wwrd.pem')),
+            signerCert: fs.readFileSync(path.join(__dirname, 'certs/signerCert.pem')),
+            signerKey: fs.readFileSync(path.join(__dirname, 'certs/signerKey.pem')),
             signerKeyPassphrase: "N@l071737"    // This is the password it asks for when generating PEMS
         }
     },
@@ -100,7 +100,7 @@ exports.pass = functions.https.onRequest((request, response) => {
         const bufferData = newPass.getAsBuffer()
 
         // Saves the BufferData inside the Firebase Storage
-        storageRef.file("passes/Coupon.pkpass")
+        storageRef.file("passes/Generic.pkpass")
             .save(bufferData, (error) => {
                 if (!error){
                     fs.writeFileSync("new pkpass", bufferData)

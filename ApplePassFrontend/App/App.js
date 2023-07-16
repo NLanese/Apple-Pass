@@ -6,9 +6,9 @@ import { TextInput } from 'react-native';
 
 // Passkit-Generator Packages //
 const { PKPass } = require("passkit-generator");
+import axios from "axios";
 var fs = require('file-system')
 var path = require('path')
-var axios = require('axios')
 const https = require('https');
 
 
@@ -17,16 +17,18 @@ const https = require('https');
 /////////
 function App(){
 
-let date
 
-  useEffect(() => {
-    date = new Date()
-  }, [])
 
   // Pass Details
   const [name, setName] = useState("")
   const [title, setTitle] = useState("")
   const [years, setYears] = useState("")
+  const [date, setDate] = useState()
+
+  useEffect(() => {
+    nDate = new Date()
+    setDate(nDate)
+  }, [])
 
 
 ///////////////

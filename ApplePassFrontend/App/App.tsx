@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native';
 
+
 // Passkit-Generator Packages //
 const { PKPass } = require("passkit-generator");
 var fs = require('file-system')

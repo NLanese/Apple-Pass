@@ -22,20 +22,14 @@ var storageRef = admin.storage().bucket()
 
 // Get a reference to the model.pkpass file
 const fileRef = storageRef.file('model.pkpass');
-let pkpass
+let pkpassPath;
 
 // Download the file
 fileRef
-  .download()
-  .then((data) => {
-    // The file contents are available in the `data` Buffer
-    const bufferData = data[0];
-
-    // Process the file contents as needed
-    // For example, you can save it to disk or perform any other operations
-
-    console.log('File downloaded successfully:', bufferData);
-    pkpass = bufferData
+  .download({ destination: '/tmp/model.pkpass' })
+  .then(() => {
+    pkpassPath = '/tmp/model.pkpass';
+    console.log('File downloaded successfully:', pkpassPath);
   })
   .catch((error) => {
     console.error('Error downloading file:', error);
@@ -47,9 +41,10 @@ exports.pass = functions.https.onRequest((request, response) => {
     PKPass.from(
     {
         // Path to Pass Directory
-        
         // model: "https://console.firebase.google.com/project/apple-pass-test/storage/apple-pass-test.appspot.com/files/model.pkpass",
-        model: pkpass,
+
+        // Using Firebase Storage Objects to pull pkpass
+        model: pkpassPath,
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 
@@ -63,9 +58,9 @@ exports.pass = functions.https.onRequest((request, response) => {
         // this object is the second parameter in the FROM function
         // This holds the information you want to add / overwrite in the pass.json
         {   
-            authenticationToken: "29dd6ecd-8486-4641-9d5d-897a50cec8e8",  // Authentication Token for safe entry and creation
+            authenticationToken: "29dd6ecd-8486-4641-9d5d-897a50cec8e8",                         // Authentication Token for safe entry and creation
             webServiceURL: "https://us-central1-apple-pass-test.cloudfunctions.net/pass",        // This is the webservice (API / Lambda) address where this program will be located
-            serialNumber: "0001A",          // This needs to be unique per pass of the same Identifer
+            serialNumber: "0002A",                                                               // This needs to be unique per pass of the same Identifer
             description: "This is a test description!",
             logoText: "Logo Text Here",
         }

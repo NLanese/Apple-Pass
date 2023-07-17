@@ -118,8 +118,9 @@ function App(){
     }
   }
 
-  function downloadPass(){
 
+  function downloadPassFirebase(){
+    
   }
 
 //////////

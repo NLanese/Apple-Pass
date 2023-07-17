@@ -7,6 +7,7 @@ const admin = require('firebase-admin')
 const { storage } = require('firebase-admin')
 // To run this file use `firebase deploy --only functions` in the parent directory
 
+const os = require('os');
 var fs = require('file-system')
 var path = require('path')
 var axios = require('axios')
@@ -20,32 +21,32 @@ admin.initializeApp({
 // This Variable will be the Firebase Cloud Storage
 const storageRef = admin.storage().bucket()
 
+// Creates a Temporary Diretory to House the pkpass for use
+async function generatePKPassPath(){
+    const tempDir = os.tmpdir();
+    const tempFilePath = path.join(tempDir, 'model.pkpass');
+    return await storageRef.file('model.pkpass').download({ destination: tempFilePath }).then(() => {
+        return tempFilePath
+    })
+}
+
 ///////////////////
 // MAIN FUNCTION //
 ///////////////////
 exports.pass = functions.https.onRequest((request, response) => {
 
-    // Get a reference to the model.pkpass file
-    const fileRef = storageRef.file('model.pkpass');
-
-    // Download the file to a temporary directory
-    const tempFilePath = path.join(os.tmpdir(), 'model.pkpass');
-    var modelData
-    fileRef.download({ destination: tempFilePath })
-      .then(() => {
-        // Read the model.pkpass file
-        modelData = fs.readFileSync(tempFilePath);
-        console.log(`MODEL DATA: ${modelData}`)
-      })
+        // Creates a temporary Directory
+        let destination = generatePKPassPath()
+       
 
     // Create a PKPass Object that can be used in JS via Passkit-Generator
     PKPass.from(
     {
         // Path to Pass Directory
-        model: "https://storage.googleapis.com/apple-pass-test.appspot.com/model.pkpass",
+        // model: "gs://apple-pass-test.appspot.com/model.pkpass",
 
         // Using Firebase Storage Objects to pull pkpass
-        // model: modelData,
+        model: destination,
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 
@@ -128,9 +129,12 @@ exports.pass = functions.https.onRequest((request, response) => {
                     })
                 }
             })
+        console.log("Pass Creation Successful!")
     })
     // Error Catching
     .catch(err => {
+        console.log("Pass Creation Failed!")
+        console.log(err)
         console.error(err)
     })
 })

@@ -18,33 +18,33 @@ admin.initializeApp({
 });
 
 // This Variable will be the Firebase Cloud Storage
-var storageRef = admin.storage().bucket()
+const storageRef = admin.storage().bucket()
 
-// Get a reference to the model.pkpass file
-const fileRef = storageRef.file('model.pkpass');
-let pkpassPath;
-
-// Download the file
-fileRef
-  .download({ destination: '/tmp/model.pkpass' })
-  .then(() => {
-    pkpassPath = '/tmp/model.pkpass';
-    console.log('File downloaded successfully:', pkpassPath);
-  })
-  .catch((error) => {
-    console.error('Error downloading file:', error);
-  });
-
+///////////////////
+// MAIN FUNCTION //
+///////////////////
 exports.pass = functions.https.onRequest((request, response) => {
+
+    // Get a reference to the model.pkpass file
+    const fileRef = storageRef.file('model.pkpass');
+
+    // Download the file to a temporary directory
+    const tempFilePath = path.join(os.tmpdir(), 'model.pkpass');
+    var modelData
+    fileRef.download({ destination: tempFilePath })
+      .then(() => {
+        // Read the model.pkpass file
+        modelData = fs.readFileSync(tempFilePath);
+        console.log(`MODEL DATA: ${modelData}`)
 
     // Create a PKPass Object that can be used in JS via Passkit-Generator
     PKPass.from(
     {
         // Path to Pass Directory
-        // model: "https://console.firebase.google.com/project/apple-pass-test/storage/apple-pass-test.appspot.com/files/model.pkpass",
+        model: "https://storage.googleapis.com/apple-pass-test.appspot.com/model.pkpass",
 
         // Using Firebase Storage Objects to pull pkpass
-        model: pkpassPath,
+        // model: modelData,
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 

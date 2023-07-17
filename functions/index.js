@@ -12,13 +12,34 @@ var path = require('path')
 var axios = require('axios')
 
 
-// Gives Admin Firebase Permissions to begin the program
+// Gives Admin Firebase Permissions to the Firebase Storage
 admin.initializeApp({
-    storageBucket: "your-storage-bucket"    // Specifies Program Storage
+    storageBucket: "apple-pass-test.appspot.com"    // Specifies Program Storage
 });
 
 // This Variable will be the Firebase Cloud Storage
 var storageRef = admin.storage().bucket()
+
+// Get a reference to the model.pkpass file
+const fileRef = storageRef.file('model.pkpass');
+let pkpass
+
+// Download the file
+fileRef
+  .download()
+  .then((data) => {
+    // The file contents are available in the `data` Buffer
+    const bufferData = data[0];
+
+    // Process the file contents as needed
+    // For example, you can save it to disk or perform any other operations
+
+    console.log('File downloaded successfully:', bufferData);
+    pkpass = bufferData
+  })
+  .catch((error) => {
+    console.error('Error downloading file:', error);
+  });
 
 exports.pass = functions.https.onRequest((request, response) => {
 
@@ -27,7 +48,8 @@ exports.pass = functions.https.onRequest((request, response) => {
     {
         // Path to Pass Directory
         
-        model: "https://storage.googleapis.com/apple-pass-test.appspot.com/model.pkpass",
+        // model: "https://console.firebase.google.com/project/apple-pass-test/storage/apple-pass-test.appspot.com/files/model.pkpass",
+        model: pkpass,
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 

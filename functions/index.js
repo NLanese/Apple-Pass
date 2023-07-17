@@ -36,6 +36,7 @@ exports.pass = functions.https.onRequest((request, response) => {
         // Read the model.pkpass file
         modelData = fs.readFileSync(tempFilePath);
         console.log(`MODEL DATA: ${modelData}`)
+      })
 
     // Create a PKPass Object that can be used in JS via Passkit-Generator
     PKPass.from(

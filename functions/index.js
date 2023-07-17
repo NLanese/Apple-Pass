@@ -27,7 +27,7 @@ exports.pass = functions.https.onRequest((request, response) => {
     {
         // Path to Pass Directory
         
-        model: "gs://apple-pass-test.appspot.com/model/model.pkpass",
+        model: "https://storage.googleapis.com/apple-pass-test.appspot.com/model.pkpass",
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 
@@ -41,8 +41,8 @@ exports.pass = functions.https.onRequest((request, response) => {
         // this object is the second parameter in the FROM function
         // This holds the information you want to add / overwrite in the pass.json
         {   
-            authenticationToken: "123xyz",  // Authentication Token for safe entry and creation
-            webServiceURL: "https:",        // This is the webservice (API / Lambda) address where this program will be located
+            authenticationToken: "29dd6ecd-8486-4641-9d5d-897a50cec8e8",  // Authentication Token for safe entry and creation
+            webServiceURL: "https://us-central1-apple-pass-test.cloudfunctions.net/pass",        // This is the webservice (API / Lambda) address where this program will be located
             serialNumber: "0001A",          // This needs to be unique per pass of the same Identifer
             description: "This is a test description!",
             logoText: "Logo Text Here",
@@ -110,5 +110,9 @@ exports.pass = functions.https.onRequest((request, response) => {
                     })
                 }
             })
+    })
+    // Error Catching
+    .catch(err => {
+        console.error(err)
     })
 })

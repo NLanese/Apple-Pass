@@ -40,7 +40,8 @@ exports.pass = functions.https.onRequest((request, response) => {
        
 
     // Create a PKPass Object that can be used in JS via Passkit-Generator
-    PKPass.from(
+    // PKPass.from(
+    const newPass = new PKPass(
     {
         // Path to Pass Directory
         // model: "gs://apple-pass-test.appspot.com/model.pkpass",
@@ -50,7 +51,7 @@ exports.pass = functions.https.onRequest((request, response) => {
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 
-            wwdr: fs.readFileSync(path.join(__dirname, 'certs/wwrd.pem')),
+            wwdr: fs.readFileSync(path.join(__dirname, 'certs/wwdr.pem')),
             signerCert: fs.readFileSync(path.join(__dirname, 'certs/signerCert.pem')),
             signerKey: fs.readFileSync(path.join(__dirname, 'certs/signerKey.pem')),
             signerKeyPassphrase: "N@l071737"    // This is the password it asks for when generating PEMS

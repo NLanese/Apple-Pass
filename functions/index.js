@@ -51,10 +51,10 @@ exports.pass = functions.https.onRequest((request, response) => {
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 
-            wwdr: fs.readFileSync(path.join(__dirname, 'certs/wwdr.pem')),
-            signerCert: fs.readFileSync(path.join(__dirname, 'certs/signerCert.pem')),
-            signerKey: fs.readFileSync(path.join(__dirname, 'certs/signerKey.pem')),
-            signerKeyPassphrase: "N@l071737"    // This is the password it asks for when generating PEMS
+            wwdr: fs.fs.readFileSync('./certs/wwdr.pem'),
+            signerCert: fs.fs.readFileSync('./certs/signerCert.pem'),
+            signerKey: fs.fs.readFileSync('./certs/signerKey.pem'),
+            signerKeyPassphrase: "N@l071737"
         }
     },
 

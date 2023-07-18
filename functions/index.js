@@ -37,16 +37,14 @@ const {wwdr, signerCert, signerKey} = getCertificates()
 ///////////////////
 exports.pass = functions.https.onRequest( async(request, response) => {
 
-    console.log("REQUEST")
-    console.log(request)
-    console.error("REQUEST", request);
 
-    console.log("WWDR")
-    console.log(wwdr)
-    console.log("Cert")
-    console.log(signerCert)
-    console.log("Key")
-    console.log(signerKey)
+    console.log("============================")
+    console.log("Request BODY:", request.body)
+    console.log("REQUEST - Primary Body:", request.body.primary);
+    console.log("REQUEST - Secondary Body:", request.body.secondary);
+    console.log("REQUEST - Auxiliary Body:", request.body.secondary);
+
+    console.log("============================")
 
     // Create a PKPass Object that can be used in JS via Passkit-Generator
     const newPass = PKPass.from(
@@ -90,7 +88,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
                 value: request.body.secondary[0].value  // Finds the secondaryFields[0].value value from the request from pass.json
             },
             {
-                key: "secondary0",                      // Finds the secondaryFields[1].key value from pass.json
+                key: "secondary1",                      // Finds the secondaryFields[1].key value from pass.json
                 label: request.body.secondary[1].label, // Finds the secondaryFields[1].label value from the request from pass.json
                 value: request.body.secondary[1].value  // Finds the secondaryFields[1].value value from the request from pass.json
             },

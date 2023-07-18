@@ -76,7 +76,7 @@ function App(){
   // via axios
   async function generatePassAxios(){
     const data = {
-      body: {
+      // body: {
 
         // Primary Fields for Pass 
         primary: {
@@ -108,7 +108,7 @@ function App(){
           }
         ],
 
-      }
+      // }
     }
     try{
       const response = await axios.post("https://us-central1-apple-pass-test.cloudfunctions.net/pass", data)
@@ -120,7 +120,7 @@ function App(){
 
 
   function downloadPassFirebase(){
-    
+
   }
 
 //////////

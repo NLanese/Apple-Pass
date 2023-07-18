@@ -21,20 +21,19 @@ admin.initializeApp({
 // This Variable will be the Firebase Cloud Storage
 const storageRef = admin.storage().bucket()
 
-// Creates a Temporary Diretory to House the pkpass for use
-async function generatePKPassPath(){
+// Reads the Model File as a String for Pass
+async function readModelFile() {
     const tempDir = os.tmpdir();
     const tempFilePath = path.join(tempDir, 'model.pkpass');
-    return await storageRef.file('model.pkpass').download({ destination: tempFilePath }).then(() => {
-        return tempFilePath
-    })
+    await storageRef.file('model.pkpass').download({ destination: tempFilePath });
+    return fs.readFileSync(tempFilePath, 'utf-8');
 }
 
-function getCertificates(){
-    const wwdr = fs.readFileSync(path.join(__dirname, 'certs', 'wwdr.pem'));
-    const signerCert = fs.readFileSync(path.join(__dirname, 'certs', 'signerCert.pem'));
-    const signerKey = fs.readFileSync(path.join(__dirname, 'certs', 'signerKey.pem'));
-
+// Grabs all PEM Certificates
+async function getCertificates(){
+    const wwdr = await fs.readFileSync(path.join(__dirname, 'certs', 'wwdr.pem'));
+    const signerCert = await fs.readFileSync(path.join(__dirname, 'certs', 'signerCert.pem'));
+    const signerKey = await fs.readFileSync(path.join(__dirname, 'certs', 'signerKey.pem'));
 
     return { wwdr, signerCert, signerKey };
 }
@@ -44,24 +43,25 @@ const {wwdr, signerCert, signerKey} = getCertificates()
 ///////////////////
 // MAIN FUNCTION //
 ///////////////////
-exports.pass = functions.https.onRequest((request, response) => {
+exports.pass = functions.https.onRequest( async(request, response) => {
+
+        const modelString = await readModelFile();
 
         console.log("WWDR")
         console.log(wwdr)
-
-        // Creates a temporary Directory
-        let destination = generatePKPassPath()
+        console.log("Model String")
+        console.log(modelString)
        
 
     // Create a PKPass Object that can be used in JS via Passkit-Generator
-    // PKPass.from(
-    const newPass = new PKPass(
+    const newPass = PKPass.from(
+    // const newPass = new PKPass(
     {
         // Path to Pass Directory
         // model: "gs://apple-pass-test.appspot.com/model.pkpass",
 
         // Using Firebase Storage Objects to pull pkpass
-        model: destination,
+        model: await readModelFile(),
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 

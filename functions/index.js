@@ -21,19 +21,11 @@ admin.initializeApp({
 // This Variable will be the Firebase Cloud Storage
 const storageRef = admin.storage().bucket()
 
-// Reads the Model File as a String for Pass
-async function readModelFile() {
-    const tempDir = os.tmpdir();
-    const tempFilePath = path.join(tempDir, 'model.pkpass');
-    await storageRef.file('model.pkpass').download({ destination: tempFilePath });
-    return fs.readFileSync(tempFilePath, 'utf-8');
-}
-
 // Grabs all PEM Certificates
-async function getCertificates(){
-    const wwdr = await fs.readFileSync(path.join(__dirname, 'certs', 'wwdr.pem'));
-    const signerCert = await fs.readFileSync(path.join(__dirname, 'certs', 'signerCert.pem'));
-    const signerKey = await fs.readFileSync(path.join(__dirname, 'certs', 'signerKey.pem'));
+function getCertificates(){
+    const wwdr = fs.readFileSync(path.join(__dirname, 'certs', 'wwdr.pem'));
+    const signerCert = fs.readFileSync(path.join(__dirname, 'certs', 'signerCert.pem'));
+    const signerKey = fs.readFileSync(path.join(__dirname, 'certs', 'signerKey.pem'));
 
     return { wwdr, signerCert, signerKey };
 }
@@ -44,24 +36,17 @@ const {wwdr, signerCert, signerKey} = getCertificates()
 // MAIN FUNCTION //
 ///////////////////
 exports.pass = functions.https.onRequest( async(request, response) => {
-
-        const modelString = await readModelFile();
-
-        console.log("WWDR")
-        console.log(wwdr)
-        console.log("Model String")
-        console.log(modelString)
-       
+    console.log("WWDR")
+    console.log(wwdr)
+    console.log("Cert")
+    console.log(signerCert)
+    console.log("Key")
+    console.log(signerKey)
 
     // Create a PKPass Object that can be used in JS via Passkit-Generator
     const newPass = PKPass.from(
-    // const newPass = new PKPass(
     {
-        // Path to Pass Directory
-        // model: "gs://apple-pass-test.appspot.com/model.pkpass",
-
-        // Using Firebase Storage Objects to pull pkpass
-        model: await readModelFile(),
+        model: "./model.pass",
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 

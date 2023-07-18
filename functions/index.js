@@ -30,6 +30,16 @@ async function generatePKPassPath(){
     })
 }
 
+function getCertificates(){
+    const wwdr = fs.readFileSync(path.join(__dirname, 'certs/wwdr.pem'), 'utf-8');
+    const signerCert = fs.readFileSync(path.join(__dirname, 'certs/signerCert.pem'), 'utf-8');
+    const signerKey = fs.readFileSync(path.join(__dirname, 'certs/signerKey.pem'), 'utf-8');
+
+  return { wwdr, signerCert, signerKey };
+}
+
+const {wwdr, signerCert, signerKey} = getCertificates()
+
 ///////////////////
 // MAIN FUNCTION //
 ///////////////////
@@ -51,9 +61,9 @@ exports.pass = functions.https.onRequest((request, response) => {
 
         // Certificates
         certificates: {                 // Paths to Certificates NEEDS file-system 
-            wwdr: fs.fs.readFileSync('./certs/wwdr.pem'),
-            signerCert: fs.fs.readFileSync('./certs/signerCert.pem'),
-            signerKey: fs.fs.readFileSync('./certs/signerKey.pem'),
+            wwdr: wwdr,
+            signerCert: signerCert,
+            signerKey: signerKey,
             signerKeyPassphrase: "N@l071737"
         }
     },

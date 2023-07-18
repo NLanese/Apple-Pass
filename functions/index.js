@@ -36,6 +36,11 @@ const {wwdr, signerCert, signerKey} = getCertificates()
 // MAIN FUNCTION //
 ///////////////////
 exports.pass = functions.https.onRequest( async(request, response) => {
+
+    console.log("REQUEST")
+    console.log(request)
+    console.error("REQUEST", request);
+
     console.log("WWDR")
     console.log(wwdr)
     console.log("Cert")

@@ -7,7 +7,6 @@ const admin = require('firebase-admin')
 const { storage } = require('firebase-admin')
 // To run this file use `firebase deploy --only functions` in the parent directory
 
-const os = require('os');
 var fs = require('file-system')
 var path = require('path')
 var axios = require('axios')
@@ -18,8 +17,10 @@ admin.initializeApp({
     storageBucket: "apple-pass-test.appspot.com"    // Specifies Program Storage
 });
 
+
 // This Variable will be the Firebase Cloud Storage
 const storageRef = admin.storage().bucket()
+
 
 // Grabs all PEM Certificates
 function getCertificates(){

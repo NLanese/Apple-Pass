@@ -76,7 +76,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         
         // Adds to Primary Field
         newPass.primaryFields.push({
-            key: "primary",                         // Finds the primaryFields.key value from pass.json
+            key: "primary",                         
             label: request.body.primary.label,      // Finds the primaryFields.label value from the request from pass.json
             value: request.body.primary.value       // Finds the primaryFields.value value from the request from pass.json
         })
@@ -84,7 +84,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         // Adds to Secondary Field
         newPass.secondaryFields.push(
             {
-                key: "secondary0",                      // Finds the secondaryFields[0].key value from pass.json
+                key: "secondary0",                      
                 label: request.body.secondary[0].label, // Finds the secondaryFields[0].label value from the request from pass.json
                 value: request.body.secondary[0].value  // Finds the secondaryFields[0].value value from the request from pass.json
             },
@@ -99,10 +99,12 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         // Adds to Auxiliary Fields
         newPass.auxiliaryFields.push(
             {
+                key: 'auxiliary0',
                 label: request.body.auxiliary[0].label, // Finds the auxiliary[0].label value from the request
                 value: request.body.auxiliary[0].value  // Finds the auxiliary[0].value value from the request
             },
             {
+                key: 'auxiliary1',
                 label: request.body.auxiliary[1].label, // Finds the auxiliary[1].label value from the request
                 value: request.body.auxiliary[1].value  // Finds the auxiliary[1].value value from the request
             },
@@ -113,9 +115,9 @@ exports.pass = functions.https.onRequest( async(request, response) => {
 
         // If you want to Override the Images saved in the Pass Directory
         // This uses Axios to retrieve any thumbnails sent through the request.
-        const imageResponse = await axios.get(request.body.thumbnail, {responseType: 'arraybuffer'})
-        const buffer = Buffer.from(imageResponse.data, "utf-8")
-        newPass.addBuffer("thumbnail.png", buffer)
+        // const imageResponse = await axios.get(request.body.thumbnail, {responseType: 'arraybuffer'})
+        // const buffer = Buffer.from(imageResponse.data, "utf-8")
+        // newPass.addBuffer("thumbnail.png", buffer)
 
 
         // Creates Buffer version of Pass

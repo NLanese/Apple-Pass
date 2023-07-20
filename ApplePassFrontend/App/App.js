@@ -127,13 +127,13 @@ function App(){
 // Main //
 //////////
   return (
-    <View>
+    <View style={{marginTop: 40}}>
       <View>
-        <Text style={{marginTop: 20, fontSize: 20, fontWeight: 700, textAlign: 'center'}}>
+        <Text style={{marginTop: 40, fontSize: 20, fontWeight: 700, textAlign: 'center'}}>
           Enter information to make a pass
         </Text>
       </View>
-      <View style={{marginLeft: '20%', marginRight: '20%', marginTop: 35}}>
+      <View style={{marginLeft: '20%', marginRight: '20%', marginTop: 45}}>
         <Text style={{marginTop: 10}}>Name</Text>
         <TextInput style={{padding: 5, borderWidth: 1}}
           onChangeText={(content) => setName(content)}
@@ -147,7 +147,7 @@ function App(){
           onChangeText={(content) => setYears(content)}
         />
       </View>
-      <View style={{marginTop: 45}}>
+      <View style={{marginTop: 95}}>
         <Button
           title='Add To Wallet'
           onPress={() => generatePassAxios()}

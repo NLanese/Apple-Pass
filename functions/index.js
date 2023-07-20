@@ -109,9 +109,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         )
 
         // Sets Barcodes
-        newPass.setBarcodes.push({
-            
-        })
+        newPass.setBarcodes()
 
         // If you want to Override the Images saved in the Pass Directory
         // This uses Axios to retrieve any thumbnails sent through the request.

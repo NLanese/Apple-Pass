@@ -138,9 +138,9 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             // Encode the PKPass data to Base64 to be returned to client
             const base64Data = bufferData.toString("base64");
 
-            // Accesses or Creates a local file, passes/Generic.pkapass
-            // then SAVES the bufferData to it
-            storageRef.file("passes/Generic.pkpass")
+            // Accesses or Creates 'passes' directory in Firebase Storage
+            // Saves the bufferData to `passes/Tutorial.pkpass`
+            storageRef.file("passes/Tutorial.pkpass")
             .save(bufferData, (error) => {
 
                 // Save Failed

@@ -3,13 +3,21 @@ import { useState } from 'react';
 import { View, Text, Button } from 'react-native';
 import { TextInput } from 'react-native';
 
+// PKPass is the framework that will allow us to create a Pass in JS
+const { PKPass } = require('passkit-generator')
 
-// Passkit-Generator Packages //
-const { PKPass } = require("passkit-generator");
-import axios from "axios";
+// We are Using Firebase Functions (AWS LAmbda but Firebased) For Deployment
+const functions = require('firebase-functions')
+const admin = require('firebase-admin')
+const { storage } = require('firebase-admin')
+
+// file Navigation and Axios
 var fs = require('file-system')
 var path = require('path')
-const https = require('https');
+import axios from "axios";
+
+import BarcodeSecrets from './BarcodeSecrets';
+
 
 
 /////////
@@ -41,18 +49,18 @@ function App(){
   function handleClick(){
     if (!loading){
       setLoading(true)
+      console.log("Generating Pass")
       generatePassAxios()
       .then( pass => {
+        console.log("Returning Request")
         if (pass){
           downloadPassFirebase(pass)
         }
         else{
           console.error("Pass And/Or Pass Save has Failed!")
+          setLoading(false)
         }
       })
-    }
-    else{
-      return downloadPassFirebase()
     }
   }
 
@@ -92,6 +100,8 @@ function App(){
           }
         ],
 
+        barcode: BarcodeSecrets(),
+
       // }
     }
     try{
@@ -105,8 +115,8 @@ function App(){
   }
 
 
-  function downloadPassFirebase(){
-
+  function downloadPassFirebase(pass){
+    console.log(pass)
   }
 
 //////////

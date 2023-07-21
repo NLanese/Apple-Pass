@@ -125,14 +125,16 @@ exports.pass = functions.https.onRequest( async(request, response) => {
 
         // Saves the BufferData inside the Firebase Storage
         storageRef.file("passes/Generic.pkpass")
-            .save(bufferData, (error) => {
-                if (!error){
-                    fs.writeFileSync("new pkpass", bufferData)
-                    response.status(200).send({
-
-                    })
-                }
-            })
+        .save(bufferData, (error) => {
+            if (!error) {
+                console.log("Saved Successfully!");
+                response.status(200).send({});
+            } else {
+                console.log("Pass created and fields added, but the final step failed");
+                console.log(error);
+                response.status(500).send({ error: "Failed to save PKPass to Firebase Storage." });
+            }
+        });
         console.log("Pass Creation Successful!")
     })
     // Error Catching

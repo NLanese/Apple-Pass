@@ -112,7 +112,9 @@ function App(){
     }
     try{
       const response = await axios.post("https://us-central1-apple-pass-test.cloudfunctions.net/pass", data)
-      console.log(response)
+      if (response){
+        console.log("Pass Generastion and Saving Successful!")
+      }
     } catch (err){
       console.error(err)
     }

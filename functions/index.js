@@ -82,21 +82,21 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             // Adds to Primary Field
             newPass.primaryFields.push({
                 key: "primary",                         
-                label: request.body.primary.label,      // Finds the primaryFields.label value from the request from pass.json
-                value: request.body.primary.value       // Finds the primaryFields.value value from the request from pass.json
+                label: request.body.primary.label,      // Finds the primaryFields.label value from the request
+                value: request.body.primary.value       // Finds the primaryFields.value value from the request
             })
 
             // Adds to Secondary Field
             newPass.secondaryFields.push(
                 {
                     key: "secondary0",                      
-                    label: request.body.secondary[0].label, // Finds the secondaryFields[0].label value from the request from pass.json
-                    value: request.body.secondary[0].value  // Finds the secondaryFields[0].value value from the request from pass.json
+                    label: request.body.secondary[0].label, // Finds the secondaryFields[0].label value from the request
+                    value: request.body.secondary[0].value  // Finds the secondaryFields[0].value value from the request
                 },
                 {
-                    key: "secondary1",                      // Finds the secondaryFields[1].key value from pass.json
-                    label: request.body.secondary[1].label, // Finds the secondaryFields[1].label value from the request from pass.json
-                    value: request.body.secondary[1].value  // Finds the secondaryFields[1].value value from the request from pass.json
+                    key: "secondary1",                      // Finds the  secondaryFields[1].key value from pass.json
+                    label: request.body.secondary[1].label, // Finds the secondaryFields[1].label value from the request
+                    value: request.body.secondary[1].value  // Finds the secondaryFields[1].value value from the request
                 },
 
             )
@@ -116,11 +116,11 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             )
 
             // Sets Barcodes
-            newPass.setBarcodes({
+            newPass.setBarcodes([{
                 message: request.body.barcode,
                 format: "PKBarcodeFormatQR",
                 altText: "11424771526"
-            })
+            }])
 
         // If you want to Override the Images saved in the Pass Directory
         // This uses Axios to retrieve any thumbnails sent through the request.

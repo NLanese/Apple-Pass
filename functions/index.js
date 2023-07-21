@@ -33,6 +33,8 @@ function getCertificates(){
 
 const {wwdr, signerCert, signerKey} = getCertificates()
 
+const serialNumber = "0003A"   // This should generally be determined from a uuid associated from the user account where the request is sent from
+
 ///////////////////
 // MAIN FUNCTION //
 ///////////////////
@@ -66,7 +68,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         {   
             authenticationToken: "29dd6ecd-8486-4641-9d5d-897a50cec8e8",                         // Authentication Token for safe entry and creation
             webServiceURL: "https://us-central1-apple-pass-test.cloudfunctions.net/pass",        // This is the webservice (API / Lambda) address where this program will be located
-            serialNumber: "0003A",                                                               // This needs to be unique per pass of the same Identifer
+            serialNumber: serialNumber,                                                          // This needs to be unique per pass of the same Identifer
             description: "This is a test description!",
             logoText: "Logo Text Here",
         }
@@ -138,14 +140,17 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             // Encode the PKPass data to Base64 to be returned to client
             const base64Data = bufferData.toString("base64");
 
+            // Value for the path in Cloud Storage where the PKPass will be saved
+            const saveFilePath = `passes/Tutorial_${serialNumber}.pkpass`
+
             // Accesses or Creates 'passes' directory in Firebase Storage
             // Saves the bufferData to `passes/Tutorial.pkpass`
-            storageRef.file("passes/Tutorial.pkpass")
+            storageRef.file(saveFilePath)
             .save(bufferData, (error) => {
 
                 // Save Failed
                 if (!error) {
-                    console.log("Saved Successfully!");
+                    console.log("Saved Successfully! \n Save to: ", saveFilePath);
                     response.status(200).send({ pkpassData: base64Data });
                 } 
                 

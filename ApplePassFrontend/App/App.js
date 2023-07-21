@@ -46,14 +46,16 @@ function App(){
 // Functions //
 ///////////////
 
+  // Generates and Downloads PKPass
   function handleClick(){
     if (!loading){
       setLoading(true)
       console.log("Generating Pass")
       generatePassAxios()
-      .then( pass => {
+      .then( passResp => {
         console.log("Returning Request")
-        if (pass){
+        if (passResp){
+          console.log("Pass Creation Successful! \n Downloading now from Firebase Storage, path:", passResp.body.saveFilePath)
           downloadPassFirebase(pass)
         }
         else{
@@ -116,7 +118,13 @@ function App(){
 
 
   function downloadPassFirebase(pass){
-    console.log(pass)
+    // Gives Admin Firebase Permissions to the Firebase Storage
+    admin.initializeApp({
+      storageBucket: "apple-pass-test.appspot.com"    // Specifies Program Storage
+    });
+
+    // This Variable will be the Firebase Cloud Storage
+    const storageRef = admin.storage().bucket()
   }
 
 //////////

@@ -17,7 +17,6 @@ admin.initializeApp({
     storageBucket: "apple-pass-test.appspot.com"    // Specifies Program Storage
 });
 
-
 // This Variable will be the Firebase Cloud Storage
 const storageRef = admin.storage().bucket()
 
@@ -151,7 +150,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
                 // Save Failed
                 if (!error) {
                     console.log("Saved Successfully! \n Save to: ", saveFilePath);
-                    response.status(200).send({ pkpassData: base64Data });
+                    response.status(200).send({ pkpassData: base64Data, saveFilePath: saveFilePath });
                 } 
                 
                 // Save Succeeded

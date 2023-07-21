@@ -128,7 +128,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         .save(bufferData, (error) => {
             if (!error) {
                 console.log("Saved Successfully!");
-                response.status(200).send({});
+                response.status(200).send({ pkpassData: base64Data });
             } else {
                 console.log("Pass created and fields added, but the final step failed");
                 console.log(error);

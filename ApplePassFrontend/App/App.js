@@ -25,6 +25,9 @@ function App(){
   const [years, setYears] = useState("")
   const [date, setDate] = useState()
 
+  // 
+  const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     nDate = new Date()
     setDate(nDate)
@@ -35,41 +38,22 @@ function App(){
 // Functions //
 ///////////////
 
-  // Sends the POST Request to Firebase Function to create the Apple Pass
-  // via HTTP
-  function generatePassHttp(){
-    // const options = {
-    //   hostname: "console.firebase.google.com",
-    //   path: "/project/apple-pass-test/overview",
-    //   method: "POST",
-    //   Headers: {
-    //     'Content-Type': 'application/json',
-    //     'Content-Length' : data.length
-    //   }
-    // }
-
-    // Runs HTTP GET Request
-  //   https.get( 
-  //     // Function Location
-  //     "https://console.firebase.google.com/project/apple-pass-test/overview",
-
-  //     // Upon Response do...
-  //     (resp) => {
-  //       let data = ''
-
-  //       // On Retreiving Data, Add it 
-  //       resp.on('data', (chunk) => {
-  //         data += chunk
-  //       })
-
-  //       // On End
-  //       resp.on('end', () => {
-  //         console.log(JSON.parse(data).explanation)
-  //       })
-  //     }
-  //   )
-  //   // Error Handling
-  //   .on("error", )
+  function handleClick(){
+    if (!loading){
+      setLoading(true)
+      generatePassAxios()
+      .then( pass => {
+        if (pass){
+          downloadPassFirebase(pass)
+        }
+        else{
+          console.error("Pass And/Or Pass Save has Failed!")
+        }
+      })
+    }
+    else{
+      return downloadPassFirebase()
+    }
   }
 
   // Sends the POST Request to Firebase Function to create the Apple Pass
@@ -113,7 +97,7 @@ function App(){
     try{
       const response = await axios.post("https://us-central1-apple-pass-test.cloudfunctions.net/pass", data)
       if (response){
-        console.log("Pass Generastion and Saving Successful!")
+        return response
       }
     } catch (err){
       console.error(err)
@@ -152,7 +136,7 @@ function App(){
       <View style={{marginTop: 95}}>
         <Button
           title='Add To Wallet'
-          onPress={() => generatePassAxios()}
+          onPress={() => handleClick()}
         />
       </View>
     </View>

@@ -5,11 +5,6 @@
   "teamIdentifier" : "Y8P3LFN364",
   "webServiceURL" : "https://example.com/passes/",
   "authenticationToken" : "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
-  "barcode" : {
-    "message" : "123456789",
-    "format" : "PKBarcodeFormatPDF417",
-    "messageEncoding" : "iso-8859-1"
-  },
   "locations" : [
     {
       "longitude" : -122.3748889,

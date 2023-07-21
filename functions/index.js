@@ -66,56 +66,60 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         {   
             authenticationToken: "29dd6ecd-8486-4641-9d5d-897a50cec8e8",                         // Authentication Token for safe entry and creation
             webServiceURL: "https://us-central1-apple-pass-test.cloudfunctions.net/pass",        // This is the webservice (API / Lambda) address where this program will be located
-            serialNumber: "0002A",                                                               // This needs to be unique per pass of the same Identifer
+            serialNumber: "0003A",                                                               // This needs to be unique per pass of the same Identifer
             description: "This is a test description!",
             logoText: "Logo Text Here",
         }
     )
     // After Raw Pass Generation
     .then(async (newPass) => {
-        
-        // Adds to Primary Field
-        newPass.primaryFields.push({
-            key: "primary",                         
-            label: request.body.primary.label,      // Finds the primaryFields.label value from the request from pass.json
-            value: request.body.primary.value       // Finds the primaryFields.value value from the request from pass.json
-        })
 
-        // Adds to Secondary Field
-        newPass.secondaryFields.push(
-            {
-                key: "secondary0",                      
-                label: request.body.secondary[0].label, // Finds the secondaryFields[0].label value from the request from pass.json
-                value: request.body.secondary[0].value  // Finds the secondaryFields[0].value value from the request from pass.json
-            },
-            {
-                key: "secondary1",                      // Finds the secondaryFields[1].key value from pass.json
-                label: request.body.secondary[1].label, // Finds the secondaryFields[1].label value from the request from pass.json
-                value: request.body.secondary[1].value  // Finds the secondaryFields[1].value value from the request from pass.json
-            },
+        ////////////////////////
+        // Pass Customization //
+        ////////////////////////
 
-        )
+            // Adds to Primary Field
+            newPass.primaryFields.push({
+                key: "primary",                         
+                label: request.body.primary.label,      // Finds the primaryFields.label value from the request from pass.json
+                value: request.body.primary.value       // Finds the primaryFields.value value from the request from pass.json
+            })
 
-        // Adds to Auxiliary Fields
-        newPass.auxiliaryFields.push(
-            {
-                key: 'auxiliary0',
-                label: request.body.auxiliary[0].label, // Finds the auxiliary[0].label value from the request
-                value: request.body.auxiliary[0].value  // Finds the auxiliary[0].value value from the request
-            },
-            {
-                key: 'auxiliary1',
-                label: request.body.auxiliary[1].label, // Finds the auxiliary[1].label value from the request
-                value: request.body.auxiliary[1].value  // Finds the auxiliary[1].value value from the request
-            },
-        )
+            // Adds to Secondary Field
+            newPass.secondaryFields.push(
+                {
+                    key: "secondary0",                      
+                    label: request.body.secondary[0].label, // Finds the secondaryFields[0].label value from the request from pass.json
+                    value: request.body.secondary[0].value  // Finds the secondaryFields[0].value value from the request from pass.json
+                },
+                {
+                    key: "secondary1",                      // Finds the secondaryFields[1].key value from pass.json
+                    label: request.body.secondary[1].label, // Finds the secondaryFields[1].label value from the request from pass.json
+                    value: request.body.secondary[1].value  // Finds the secondaryFields[1].value value from the request from pass.json
+                },
 
-        // Sets Barcodes
-        newPass.setBarcodes({
-            message: request.body.barcode,
-            format: "PKBarcodeFormatQR",
-            altText: "11424771526"
-        })
+            )
+
+            // Adds to Auxiliary Fields
+            newPass.auxiliaryFields.push(
+                {
+                    key: 'auxiliary0',
+                    label: request.body.auxiliary[0].label, // Finds the auxiliary[0].label value from the request
+                    value: request.body.auxiliary[0].value  // Finds the auxiliary[0].value value from the request
+                },
+                {
+                    key: 'auxiliary1',
+                    label: request.body.auxiliary[1].label, // Finds the auxiliary[1].label value from the request
+                    value: request.body.auxiliary[1].value  // Finds the auxiliary[1].value value from the request
+                },
+            )
+
+            // Sets Barcodes
+            newPass.setBarcodes({
+                message: request.body.barcode,
+                format: "PKBarcodeFormatQR",
+                altText: "11424771526"
+            })
 
         // If you want to Override the Images saved in the Pass Directory
         // This uses Axios to retrieve any thumbnails sent through the request.
@@ -123,23 +127,35 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         // const buffer = Buffer.from(imageResponse.data, "utf-8")
         // newPass.addBuffer("thumbnail.png", buffer)
 
+        ////////////////////////
+        // Returning the Pass //
+        ////////////////////////
 
-        // Creates Buffer version of Pass
-        const bufferData = newPass.getAsBuffer()
 
-        // Saves the BufferData inside the Firebase Storage
-        storageRef.file("passes/Generic.pkpass")
-        .save(bufferData, (error) => {
-            if (!error) {
-                console.log("Saved Successfully!");
-                response.status(200).send({ pkpassData: base64Data });
-            } else {
-                console.log("Pass created and fields added, but the final step failed");
-                console.log(error);
-                response.status(500).send({ error: "Failed to save PKPass to Firebase Storage." });
-            }
-        });
-        console.log("Pass Creation Successful!")
+            // Creates Buffer version of Pass to be saved
+            const bufferData = newPass.getAsBuffer();
+
+            // Encode the PKPass data to Base64 to be returned to client
+            const base64Data = bufferData.toString("base64");
+
+            // Accesses or Creates a local file, passes/Generic.pkapass
+            // then SAVES the bufferData to it
+            storageRef.file("passes/Generic.pkpass")
+            .save(bufferData, (error) => {
+
+                // Save Failed
+                if (!error) {
+                    console.log("Saved Successfully!");
+                    response.status(200).send({ pkpassData: base64Data });
+                } 
+                
+                // Save Succeeded
+                else {
+                    console.log("Pass created and fields added, but the final step failed");
+                    console.log(error);
+                    response.status(500).send({ error: "Failed to save PKPass to Firebase Storage." });
+                }
+            });
     })
     // Error Catching
     .catch(err => {

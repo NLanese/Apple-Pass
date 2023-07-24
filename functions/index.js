@@ -132,7 +132,6 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         // Returning the Pass //
         ////////////////////////
 
-
             // Creates Buffer version of Pass to be saved
             const bufferData = newPass.getAsBuffer();
 

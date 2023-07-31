@@ -6,13 +6,16 @@ import { TextInput } from 'react-native';
 // PKPass is the framework that will allow us to create a Pass in JS
 const { PKPass } = require('passkit-generator')
 
+
 // We are Using Firebase Functions (AWS LAmbda but Firebased) For Deployment
 const functions = require('firebase-functions')
-const admin = require('firebase-admin')
-const { storage } = require('firebase-admin')
 
-// file Navigation and Axios
-var fs = require('file-system')
+
+// For Retreiving the pkpass from storage
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
+
+// File Navigation and Axios
 var path = require('path')
 import axios from "axios";
 
@@ -24,8 +27,6 @@ import BarcodeSecrets from './BarcodeSecrets';
 // APP //
 /////////
 function App(){
-
-
 
   // Pass Details
   const [name, setName] = useState("")
@@ -55,6 +56,7 @@ function App(){
       .then( passResp => {
         console.log("Returning Request")
         if (passResp){
+          console.log(passResp)
           console.log("Pass Creation Successful! \n Downloading now from Firebase Storage, path:", passResp.body.saveFilePath)
           downloadPassFirebase(pass)
         }
@@ -74,31 +76,26 @@ function App(){
 
         // Primary Fields for Pass 
         primary: {
-          label: "Name",
-          value: name
+          value: "123-456-7890"
         },
 
         // Secondary Fields for PAss
         secondary: [
           {
-            label: "Title",
-            value: title
+            value: "Test Section"
           },
           {
-            label: "Years in Position",
-            value: years
+            value: "12-31-30"
           }
         ],
 
         // Auxiliary Fields for Pass
         auxiliary: [
           {
-            label: "Expires",
-            value: "12 - 31 - 30"
+            value: "Johnny"
           },
           {
-            label: "Date Aquired",
-            value: `${date.getMonth() + 1} - ${date.getYear()}`
+            value: "Test"
           }
         ],
 
@@ -117,14 +114,9 @@ function App(){
   }
 
 
-  function downloadPassFirebase(pass){
-    // Gives Admin Firebase Permissions to the Firebase Storage
-    admin.initializeApp({
-      storageBucket: "apple-pass-test.appspot.com"    // Specifies Program Storage
-    });
+  // Downloads the Pass from Firebase Storage
+  function downloadPassFirebase(){
 
-    // This Variable will be the Firebase Cloud Storage
-    const storageRef = admin.storage().bucket()
   }
 
 //////////

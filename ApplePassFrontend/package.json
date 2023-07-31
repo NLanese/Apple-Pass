@@ -10,15 +10,26 @@
     "test": "jest"
   },
   "dependencies": {
+    "@firebase/storage": "^0.11.2",
     "@react-native-community/masked-view": "^0.1.11",
+    "assert": "^2.0.0",
     "axios": "^1.4.0",
+    "crypto": "^1.0.1",
+    "file-system": "^2.2.2",
+    "firebase": "^10.1.0",
+    "firebase-admin": "^11.10.1",
+    "fs": "^0.0.1-security",
+    "os": "^0.1.2",
     "passkit-generator": "^3.1.9",
+    "path": "^0.12.7",
+    "querystring": "^0.2.1",
     "react": "18.2.0",
     "react-native": "^0.72.3",
     "react-native-gesture-handler": "^2.12.0",
     "react-native-reanimated": "^3.3.0",
     "react-native-safe-area-context": "^4.7.1",
     "react-native-screens": "^3.22.1",
+    "stream": "^0.0.2",
     "url": "^0.11.1"
   },
   "devDependencies": {

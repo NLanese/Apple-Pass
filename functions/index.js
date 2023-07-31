@@ -7,6 +7,7 @@ const admin = require('firebase-admin')
 const { storage } = require('firebase-admin')
 // To run this file use `firebase deploy --only functions` in the parent directory
 
+
 var fs = require('file-system')
 var path = require('path')
 var axios = require('axios')
@@ -24,7 +25,7 @@ const storageRef = admin.storage().bucket()
 // Grabs all PEM Certificates
 function getCertificates(){
     const wwdr = fs.readFileSync(path.join(__dirname, 'certs', 'wwdr.pem'));
-    const signerCert = fs.readFileSync(path.join(__dirname, 'certs', 'signerCert.pem'));
+    const signerCert = fs.readFileSync(path.join(__dirname, 'certs', 'sign\erCert.pem'));
     const signerKey = fs.readFileSync(path.join(__dirname, 'certs', 'signerKey.pem'));
 
     return { wwdr, signerCert, signerKey };

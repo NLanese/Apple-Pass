@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { View, Text, Button } from 'react-native';
 import { TextInput } from 'react-native';
 
-import * as firebase from 'firebase';
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 
 import * as admin from 'firebase-admin';
 
@@ -58,7 +59,7 @@ function App(){
     if (!loading){
       setLoading(true)
       console.log("Generating Pass")
-      generatePassAxios()
+      generatePass()
       .then( passResp => {
         console.log("Returning Request")
         if (passResp){
@@ -76,7 +77,7 @@ function App(){
 
   // Sends the POST Request to Firebase Function to create the Apple Pass
   // via axios
-  async function generatePassAxios(){
+  async function generatePass(){
     const data = {
         // Primary Fields for Pass 
         primary: {value: "123-456-7890"},

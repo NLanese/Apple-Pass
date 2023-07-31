@@ -89,31 +89,14 @@ exports.pass = functions.https.onRequest( async(request, response) => {
 
             // Adds to Secondary Field
             newPass.secondaryFields.push(
-                {
-                    key: "secondary0",                      
-                    label: request.body.secondary[0].label, // Finds the secondaryFields[0].label value from the request
-                    value: request.body.secondary[0].value  // Finds the secondaryFields[0].value value from the request
-                },
-                {
-                    key: "secondary1",                      // Finds the  secondaryFields[1].key value from pass.json
-                    label: request.body.secondary[1].label, // Finds the secondaryFields[1].label value from the request
-                    value: request.body.secondary[1].value  // Finds the secondaryFields[1].value value from the request
-                },
-
+                {value: request.body.secondary[0].value},
+                {value: request.body.secondary[1].value},
             )
 
             // Adds to Auxiliary Fields
             newPass.auxiliaryFields.push(
-                {
-                    key: 'auxiliary0',
-                    label: request.body.auxiliary[0].label, // Finds the auxiliary[0].label value from the request
-                    value: request.body.auxiliary[0].value  // Finds the auxiliary[0].value value from the request
-                },
-                {
-                    key: 'auxiliary1',
-                    label: request.body.auxiliary[1].label, // Finds the auxiliary[1].label value from the request
-                    value: request.body.auxiliary[1].value  // Finds the auxiliary[1].value value from the request
-                },
+                {value: request.body.auxiliary[0].value},
+                {value: request.body.auxiliary[1].value},
             )
 
             // Sets Barcodes

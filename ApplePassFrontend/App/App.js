@@ -3,6 +3,12 @@ import { useState } from 'react';
 import { View, Text, Button } from 'react-native';
 import { TextInput } from 'react-native';
 
+import * as firebase from 'firebase';
+
+import * as admin from 'firebase-admin';
+
+
+
 // PKPass is the framework that will allow us to create a Pass in JS
 const { PKPass } = require('passkit-generator')
 
@@ -12,7 +18,7 @@ const functions = require('firebase-functions')
 
 
 // For Retreiving the pkpass from storage
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, getStream } from "firebase/storage";
 
 
 // File Navigation and Axios
@@ -56,9 +62,9 @@ function App(){
       .then( passResp => {
         console.log("Returning Request")
         if (passResp){
-          console.log(passResp)
-          console.log("Pass Creation Successful! \n Downloading now from Firebase Storage, path:", passResp.body.saveFilePath)
-          downloadPassFirebase(pass)
+          console.log("Pass Creation Successful! \n Firebase Storage Path:", passResp.data.saveFilePath)
+          downloadPassFirebase(passResp.data.saveFilePath)
+          setLoading(false)
         }
         else{
           console.error("Pass And/Or Pass Save has Failed!")
@@ -72,36 +78,22 @@ function App(){
   // via axios
   async function generatePassAxios(){
     const data = {
-      // body: {
-
         // Primary Fields for Pass 
-        primary: {
-          value: "123-456-7890"
-        },
+        primary: {value: "123-456-7890"},
 
         // Secondary Fields for PAss
         secondary: [
-          {
-            value: "Test Section"
-          },
-          {
-            value: "12-31-30"
-          }
+          {value: "Test Section"},
+          {value: "12-31-30"}
         ],
 
         // Auxiliary Fields for Pass
         auxiliary: [
-          {
-            value: "Johnny"
-          },
-          {
-            value: "Test"
-          }
+          {value: "Johnny"},
+          {value: "Test"}
         ],
 
         barcode: BarcodeSecrets(),
-
-      // }
     }
     try{
       const response = await axios.post("https://us-central1-apple-pass-test.cloudfunctions.net/pass", data)
@@ -115,8 +107,12 @@ function App(){
 
 
   // Downloads the Pass from Firebase Storage
-  function downloadPassFirebase(){
+  function downloadPassFirebase(fbPath){
+    // Create a reference to the file we want to download
+    const storage = getStorage();
+    const pkpassRef = ref(storage, fbPath);
 
+    getStream(pkpassRef)
   }
 
 //////////

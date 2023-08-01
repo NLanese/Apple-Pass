@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* ApplePassFrontendTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ApplePassFrontendTests.m */; };
-		067749095A2EB4DB685CFE82 /* Pods_ApplePassFrontend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF3F74CA17B438D438A2D04F /* Pods_ApplePassFrontend.framework */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		4BFB7C56138C5C9A1C138C84 /* Pods_ApplePassFrontend_ApplePassFrontendTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C0D40D2B56C0003F1B6A966 /* Pods_ApplePassFrontend_ApplePassFrontendTests.framework */; };
+		404FD4CD2A77DF9F00DB847A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 404FD4CC2A77DF9F00DB847A /* GoogleService-Info.plist */; };
+		404FD4D02A77E1A400DB847A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 404FD4CF2A77E1A400DB847A /* FirebaseAuth */; };
+		404FD4D22A77E1A400DB847A /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 404FD4D12A77E1A400DB847A /* FirebaseFunctions */; };
+		404FD4D42A77E1A400DB847A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 404FD4D32A77E1A400DB847A /* FirebaseStorage */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8E1344DBB90B814E878D8635 /* libPods-ApplePassFrontend-ApplePassFrontendTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95AC143E35F8394BFFA84173 /* libPods-ApplePassFrontend-ApplePassFrontendTests.a */; };
+		925275D2B7E006643D812B86 /* libPods-ApplePassFrontend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75182F2AFEAC2E8C39D55A24 /* libPods-ApplePassFrontend.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,12 +41,13 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ApplePassFrontend/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ApplePassFrontend/main.m; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-ApplePassFrontend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApplePassFrontend.debug.xcconfig"; path = "Target Support Files/Pods-ApplePassFrontend/Pods-ApplePassFrontend.debug.xcconfig"; sourceTree = "<group>"; };
+		404FD4CC2A77DF9F00DB847A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-ApplePassFrontend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApplePassFrontend.release.xcconfig"; path = "Target Support Files/Pods-ApplePassFrontend/Pods-ApplePassFrontend.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-ApplePassFrontend-ApplePassFrontendTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApplePassFrontend-ApplePassFrontendTests.debug.xcconfig"; path = "Target Support Files/Pods-ApplePassFrontend-ApplePassFrontendTests/Pods-ApplePassFrontend-ApplePassFrontendTests.debug.xcconfig"; sourceTree = "<group>"; };
+		75182F2AFEAC2E8C39D55A24 /* libPods-ApplePassFrontend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ApplePassFrontend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ApplePassFrontend/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-ApplePassFrontend-ApplePassFrontendTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApplePassFrontend-ApplePassFrontendTests.release.xcconfig"; path = "Target Support Files/Pods-ApplePassFrontend-ApplePassFrontendTests/Pods-ApplePassFrontend-ApplePassFrontendTests.release.xcconfig"; sourceTree = "<group>"; };
-		8C0D40D2B56C0003F1B6A966 /* Pods_ApplePassFrontend_ApplePassFrontendTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApplePassFrontend_ApplePassFrontendTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BF3F74CA17B438D438A2D04F /* Pods_ApplePassFrontend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApplePassFrontend.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95AC143E35F8394BFFA84173 /* libPods-ApplePassFrontend-ApplePassFrontendTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ApplePassFrontend-ApplePassFrontendTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -51,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BFB7C56138C5C9A1C138C84 /* Pods_ApplePassFrontend_ApplePassFrontendTests.framework in Frameworks */,
+				8E1344DBB90B814E878D8635 /* libPods-ApplePassFrontend-ApplePassFrontendTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +64,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				067749095A2EB4DB685CFE82 /* Pods_ApplePassFrontend.framework in Frameworks */,
+				404FD4D22A77E1A400DB847A /* FirebaseFunctions in Frameworks */,
+				404FD4D42A77E1A400DB847A /* FirebaseStorage in Frameworks */,
+				404FD4D02A77E1A400DB847A /* FirebaseAuth in Frameworks */,
+				925275D2B7E006643D812B86 /* libPods-ApplePassFrontend.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +98,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				404FD4CC2A77DF9F00DB847A /* GoogleService-Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -100,8 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				BF3F74CA17B438D438A2D04F /* Pods_ApplePassFrontend.framework */,
-				8C0D40D2B56C0003F1B6A966 /* Pods_ApplePassFrontend_ApplePassFrontendTests.framework */,
+				75182F2AFEAC2E8C39D55A24 /* libPods-ApplePassFrontend.a */,
+				95AC143E35F8394BFFA84173 /* libPods-ApplePassFrontend-ApplePassFrontendTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -191,6 +200,11 @@
 			dependencies = (
 			);
 			name = ApplePassFrontend;
+			packageProductDependencies = (
+				404FD4CF2A77E1A400DB847A /* FirebaseAuth */,
+				404FD4D12A77E1A400DB847A /* FirebaseFunctions */,
+				404FD4D32A77E1A400DB847A /* FirebaseStorage */,
+			);
 			productName = ApplePassFrontend;
 			productReference = 13B07F961A680F5B00A75B9A /* ApplePassFrontend.app */;
 			productType = "com.apple.product-type.application";
@@ -221,6 +235,9 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
+			packageReferences = (
+				404FD4CE2A77E1A400DB847A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -245,6 +262,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				404FD4CD2A77DF9F00DB847A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,6 +749,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		404FD4CE2A77E1A400DB847A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		404FD4CF2A77E1A400DB847A /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 404FD4CE2A77E1A400DB847A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		404FD4D12A77E1A400DB847A /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 404FD4CE2A77E1A400DB847A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		404FD4D32A77E1A400DB847A /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 404FD4CE2A77E1A400DB847A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }

@@ -3,10 +3,7 @@ import { useState } from 'react';
 import { View, Text, Button } from 'react-native';
 import { TextInput } from 'react-native';
 
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-
-import * as admin from 'firebase-admin';
+import firebase from '@react-native-firebase/app';
 
 
 
@@ -15,11 +12,11 @@ const { PKPass } = require('passkit-generator')
 
 
 // We are Using Firebase Functions (AWS LAmbda but Firebased) For Deployment
-const functions = require('firebase-functions')
+// const functions = require('firebase-functions')
 
 
 // For Retreiving the pkpass from storage
-import { getStorage, ref, getDownloadURL, getStream } from "firebase/storage";
+// import { getStorage, ref, getDownloadURL, getStream } from "firebase/storage";
 
 
 // File Navigation and Axios
@@ -109,11 +106,7 @@ function App(){
 
   // Downloads the Pass from Firebase Storage
   function downloadPassFirebase(fbPath){
-    // Create a reference to the file we want to download
-    const storage = getStorage();
-    const pkpassRef = ref(storage, fbPath);
 
-    getStream(pkpassRef)
   }
 
 //////////

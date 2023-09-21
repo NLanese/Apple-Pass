@@ -1,0 +1,7 @@
+==== Deployment ====
+To get the functions directory updated on the Firebase Cloud, login through the Firebase CLI and then runn the following in the ROOT of the project
+`firebase deploy --only functions`
+
+
+==== Modifications ====
+To properly change the dependencies, make sure you are on nvm v18.10.0 before you can run `npm i`  inside of the `functions` repo

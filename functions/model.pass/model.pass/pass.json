@@ -27,37 +27,37 @@
   "backgroundColor" : "rgb(197, 31, 31)",
   "generic" : {
     "headerFields" : {
-      "key" : "HeaderKey",
+      "key" : "header",
       "label" : "Grade",
       "value" : "Null"
     },
     "primaryFields" : [
       {
-        "key" : "PrimaryKey",
-        "label" : "Member #",
+        "key" : "primary",
+        "label" : "Member Num.",
         "value" : "Null"
       }
     ],
     "secondaryFields" : [
       {
-        "key" : "secondaryKeyOne",
-        "label" : "Section",
+        "key" : "secondaryOne",
+        "label" : "Joined",
         "value" : "Null"
       },
       {
-        "key" : "secondaryKeyTwo",
+        "key" : "secondaryTwo",
         "label" : "Valid Thru",
         "value" : "Null"
       }
     ],
     "auxiliaryFields" : [
       {
-        "key" : "auxiliaryKeyOne",
+        "key" : "auxiliaryOne",
         "label" : "First Name",
         "value" : "Null"
       },
       {
-        "key" : "auxiliaryKeyOne",
+        "key" : "auxiliaryTwo",
         "label" : "Last Name",
         "value" : "Null"
       }

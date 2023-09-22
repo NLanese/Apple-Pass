@@ -1,12 +1,12 @@
+// To deploy this function use `firebase deploy --only functions` in the root directory
+
+
 // PKPass is the framework that will allow us to create a Pass in JS
 const { PKPass } = require('passkit-generator')
 
 // We are Using Firebase Functions (AWS LAmbda but Firebased) For Deployment
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-const { storage } = require('firebase-admin')
-// To run this file use `firebase deploy --only functions` in the parent directory
-
 
 var fs = require('file-system')
 var path = require('path')
@@ -15,7 +15,7 @@ var axios = require('axios')
 
 // Gives Admin Firebase Permissions to the Firebase Storage
 admin.initializeApp({
-    storageBucket: "apple-pass-test.appspot.com"    // Specifies Program Storage
+    storageBucket: "apple-pass-test.appspot.com"    // Sets the specific firebase storage buck ID
 });
 
 // This Variable will be the Firebase Cloud Storage
@@ -33,8 +33,6 @@ function getCertificates(){
 
 const {wwdr, signerCert, signerKey} = getCertificates()
 
-const serialNumber = "0003A"   // This should generally be determined from a uuid associated from the user account where the request is sent from
-
 ///////////////////
 // MAIN FUNCTION //
 ///////////////////
@@ -42,10 +40,12 @@ exports.pass = functions.https.onRequest( async(request, response) => {
 
 
     console.log("============================")
-    console.log("Request BODY:", request.body)
+    console.log("Organizer Name: Ostrich Development")
+    console.log("REQUEST - Serial Number: ", request.body.serialNumber);
     console.log("REQUEST - Primary Body:", request.body.primary);
     console.log("REQUEST - Secondary Body:", request.body.secondary);
     console.log("REQUEST - Auxiliary Body:", request.body.secondary);
+    
 
     console.log("============================")
 
@@ -68,9 +68,10 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         {   
             authenticationToken: "29dd6ecd-8486-4641-9d5d-897a50cec8e8",                         // Authentication Token for safe entry and creation
             webServiceURL: "https://us-central1-apple-pass-test.cloudfunctions.net/pass",        // This is the webservice (API / Lambda) address where this program will be located
-            serialNumber: serialNumber,                                                          // This needs to be unique per pass of the same Identifer
+            serialNumber: request.body.serialNumber ? request.body.serialNumber : "00000",                                                          // This needs to be unique per pass of the same Identifer
             description: "This is a test description!",
             logoText: "Logo Text Here",
+            organizationName: "Ostrich Development"
         }
     )
     // After Raw Pass Generation
@@ -79,6 +80,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         ////////////////////////
         // Pass Customization //
         ////////////////////////
+
 
             // Adds to Primary Field
             newPass.primaryFields.push({
@@ -100,11 +102,11 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             )
 
             // Sets Barcodes
-            newPass.setBarcodes([{
+            newPass.setBarcodes({
                 message: request.body.barcode,
                 format: "PKBarcodeFormatQR",
                 altText: "11424771526"
-            }])
+            })
 
         // If you want to Override the Images saved in the Pass Directory
         // This uses Axios to retrieve any thumbnails sent through the request.
@@ -112,9 +114,9 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         // const buffer = Buffer.from(imageResponse.data, "utf-8")
         // newPass.addBuffer("thumbnail.png", buffer)
 
-        ////////////////////////
-        // Returning the Pass //
-        ////////////////////////
+        /////////////////////
+        // Saving the Pass //
+        /////////////////////
 
             // Creates Buffer version of Pass to be saved
             const bufferData = newPass.getAsBuffer();

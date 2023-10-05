@@ -125,7 +125,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             const base64Data = bufferData.toString("base64");
 
             // Value for the path in Cloud Storage where the PKPass will be saved
-            const saveFilePath = `passes/Tutorial_${serialNumber}.pkpass`
+            const saveFilePath = `passes/Tutorial${serialNumber}.pkpass`
 
             // Accesses or Creates 'passes' directory in Firebase Storage
             // Saves the bufferData to `passes/Tutorial.pkpass`

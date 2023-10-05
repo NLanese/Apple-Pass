@@ -42,6 +42,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
     console.log("============================")
     console.log("Organizer Name: Ostrich Development")
     console.log("REQUEST - Serial Number: ", request.body.serialNumber);
+    console.log("REQUEST - Header Body:", request.body.header);
     console.log("REQUEST - Primary Body:", request.body.primary);
     console.log("REQUEST - Secondary Body:", request.body.secondary);
     console.log("REQUEST - Auxiliary Body:", request.body.secondary);
@@ -81,24 +82,51 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         // Pass Customization //
         ////////////////////////
 
+            newPass.headerFields.push(
+                {
+                    label: request.body.header[0].label,      // Finds the primaryFields.label value from the request
+                    value: request.body.header[0].value       // Finds the primaryFields.value value from the request
+                },
+                {
+                    label: request.body.header[1].label,      
+                    value: request.body.header[1].value 
+                }
+            )
 
             // Adds to Primary Field
-            newPass.primaryFields.push({
-                key: "primary",                         
-                label: request.body.primary.label,      // Finds the primaryFields.label value from the request
-                value: request.body.primary.value       // Finds the primaryFields.value value from the request
-            })
+            newPass.primaryFields.push(
+                {
+                    label: request.body.primary[0].label,      // Finds the primaryFields.label value from the request
+                    value: request.body.primary[0].value       // Finds the primaryFields.value value from the request
+                },
+                {
+                    label: request.body.primary[1].label,      
+                    value: request.body.primary[1].value 
+                }
+            )
 
             // Adds to Secondary Field
             newPass.secondaryFields.push(
-                {value: request.body.secondary[0].value},
-                {value: request.body.secondary[1].value},
+                {
+                    value: request.body.secondary[0].value,
+                    label: request.body.secondary[0].label
+                },
+                {
+                    value: request.body.secondary[1].value,
+                    label: request.body.secondary[1].label
+                },
             )
 
             // Adds to Auxiliary Fields
             newPass.auxiliaryFields.push(
-                {value: request.body.auxiliary[0].value},
-                {value: request.body.auxiliary[1].value},
+                {
+                    value: request.body.auxiliary[0].value,
+                    label: request.body.auxiliary[0].label
+                },
+                {
+                    value: request.body.auxiliary[1].value,
+                    label: request.body.auxiliary[1].label
+                },
             )
 
             // Sets Barcodes

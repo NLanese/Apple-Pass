@@ -40,6 +40,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
 
 
     console.log("============================")
+    console.log("REQUEST::: ", request, "\n*\n*\n*")
     console.log("Organizer Name: Ostrich Development")
     console.log("REQUEST - Serial Number: ", request.body.serialNumber);
     console.log("REQUEST - Header Body:", request.body.header);
@@ -78,6 +79,8 @@ exports.pass = functions.https.onRequest( async(request, response) => {
     // After Raw Pass Generation
     .then(async (newPass) => {
 
+        console.log("Empty Pass Initialized...")
+
         ////////////////////////
         // Pass Customization //
         ////////////////////////
@@ -93,6 +96,8 @@ exports.pass = functions.https.onRequest( async(request, response) => {
                 }
             )
 
+            console.log("Header added...")
+
             // Adds to Primary Field
             newPass.primaryFields.push(
                 {
@@ -104,6 +109,8 @@ exports.pass = functions.https.onRequest( async(request, response) => {
                     value: request.body.primary[1].value 
                 }
             )
+
+            console.log("Primary added...")
 
             // Adds to Secondary Field
             newPass.secondaryFields.push(
@@ -117,6 +124,8 @@ exports.pass = functions.https.onRequest( async(request, response) => {
                 },
             )
 
+            console.log("Secondary added...")
+
             // Adds to Auxiliary Fields
             newPass.auxiliaryFields.push(
                 {
@@ -128,6 +137,8 @@ exports.pass = functions.https.onRequest( async(request, response) => {
                     label: request.body.auxiliary[1].label
                 },
             )
+
+            console.log("Auxiliary added...")
 
             // Sets Barcodes
             newPass.setBarcodes({
@@ -146,11 +157,17 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         // Saving the Pass //
         /////////////////////
 
+            console.log("Saving the Pass, process starting now...")
+
             // Creates Buffer version of Pass to be saved
             const bufferData = newPass.getAsBuffer();
 
+            console.log("Pass to Buffer done.")
+
             // Encode the PKPass data to Base64 to be returned to client
             const base64Data = bufferData.toString("base64");
+
+            console.log("Buffer to base64 done.")
 
             // Value for the path in Cloud Storage where the PKPass will be saved
             const saveFilePath = `passes/Tutorial${serialNumber}.pkpass`

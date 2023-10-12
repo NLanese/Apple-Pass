@@ -40,7 +40,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
 
 
     console.log("============================")
-    console.log("REQUEST::: ", request, "\n*\n*\n*")
+    console.log("REQUEST BODY::: ", request.body, "\n*\n*\n*")
     console.log("Organizer Name: Ostrich Development")
     console.log("REQUEST - Serial Number: ", request.body.serialNumber);
     console.log("REQUEST - Header Body:", request.body.header);
@@ -85,15 +85,19 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         // Pass Customization //
         ////////////////////////
 
+            console.log("Header Object From Request")
+            console.log(request.body.header)
             newPass.headerFields.push(
                 {
                     label: request.body.header[0].label,      // Finds the primaryFields.label value from the request
-                    value: request.body.header[0].value       // Finds the primaryFields.value value from the request
+                    value: request.body.header[0].value,       // Finds the primaryFields.value value from the request
+                    key: request.body.header[0].key
                 },
-                {
+                (request.body.header.length > 1 ? ({
                     label: request.body.header[1].label,      
-                    value: request.body.header[1].value 
-                }
+                    value: request.body.header[1].value, 
+                    key: request.body.header[1].key 
+                }) : null)
             )
 
             console.log("Header added...")
@@ -102,12 +106,14 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             newPass.primaryFields.push(
                 {
                     label: request.body.primary[0].label,      // Finds the primaryFields.label value from the request
-                    value: request.body.primary[0].value       // Finds the primaryFields.value value from the request
+                    value: request.body.primary[0].value,      // Finds the primaryFields.value value from the request
+                    key: request.body.primary[0].key
                 },
-                {
+                (request.body.primary.length > 1 ? ({
                     label: request.body.primary[1].label,      
-                    value: request.body.primary[1].value 
-                }
+                    value: request.body.primary[1].value, 
+                    key: request.body.primary[1].key
+                }) : null)
             )
 
             console.log("Primary added...")
@@ -116,12 +122,14 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             newPass.secondaryFields.push(
                 {
                     value: request.body.secondary[0].value,
-                    label: request.body.secondary[0].label
+                    label: request.body.secondary[0].label, 
+                    key: request.body.secondary[0].key
                 },
-                {
-                    value: request.body.secondary[1].value,
-                    label: request.body.secondary[1].label
-                },
+                (request.body.secondary.length > 1 ? ({
+                    label: request.body.secondary[1].label,      
+                    value: request.body.secondary[1].value, 
+                    key: request.body.secondary[1].key 
+                }) : null)
             )
 
             console.log("Secondary added...")
@@ -130,12 +138,14 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             newPass.auxiliaryFields.push(
                 {
                     value: request.body.auxiliary[0].value,
-                    label: request.body.auxiliary[0].label
+                    label: request.body.auxiliary[0].label, 
+                    key: request.body.auxiliary[0].key
                 },
-                {
-                    value: request.body.auxiliary[1].value,
-                    label: request.body.auxiliary[1].label
-                },
+                (request.body.header.length > 1 ? ({
+                    label: request.body.header[1].label,      
+                    value: request.body.header[1].value, 
+                    key: request.body.auxiliary[1].key 
+                }) : null)
             )
 
             console.log("Auxiliary added...")

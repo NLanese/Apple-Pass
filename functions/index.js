@@ -180,6 +180,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             console.log("Buffer to base64 done.")
 
             // Value for the path in Cloud Storage where the PKPass will be saved
+            let serialNumber = request.body.serialNumber ? request.body.serialNumber : "00000"
             const saveFilePath = `passes/Tutorial${serialNumber}.pkpass`
 
             // Accesses or Creates 'passes' directory in Firebase Storage

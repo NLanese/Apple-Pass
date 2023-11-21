@@ -73,7 +73,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             serialNumber: request.body.serialNumber ? request.body.serialNumber : "00000",                                                          // This needs to be unique per pass of the same Identifer
             description: "This is a test description!",
             logoText: "Logo Text Here",
-            organizationName: "Ostrich Development"
+        organizationName: "Ostrich Development"
         }
     )
     // After Raw Pass Generation
@@ -152,7 +152,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
 
             // Sets Barcodes
             newPass.setBarcodes({
-                message: request.body.barcode,
+                message: request.body.miscData.barcode,
                 format: "PKBarcodeFormatQR",
                 altText: "11424771526"
             })
@@ -191,7 +191,10 @@ exports.pass = functions.https.onRequest( async(request, response) => {
                 // Save Failed
                 if (!error) {
                     console.log("Saved Successfully! \n Save to: ", saveFilePath);
-                    response.status(200).send({ pkpassData: base64Data, saveFilePath: saveFilePath });
+                    console.log("Returning body should include...")
+                    console.log(base64Data)
+                    // response.status(200).send({ pkpassData: base64Data, saveFilePath: saveFilePath });
+                    response.status(200).send({ base64: base64Data });
                 } 
                 
                 // Save Succeeded
@@ -201,6 +204,10 @@ exports.pass = functions.https.onRequest( async(request, response) => {
                     response.status(500).send({ error: "Failed to save PKPass to Firebase Storage." });
                 }
             });
+
+        ////////////////////////
+        // RETURNING THE PASS //
+        ////////////////////////
     })
     // Error Catching
     .catch(err => {

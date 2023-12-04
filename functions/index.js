@@ -36,22 +36,21 @@ const {wwdr, signerCert, signerKey} = getCertificates()
 ///////////////////
 // MAIN FUNCTION //
 ///////////////////
-exports.pass = functions.https.onRequest( async(request, response) => {
+exports.pass = functions.https.onRequest(async(request, response) => {
 
 
     console.log("============================")
+    console.log("FULL REQUEST::::", request, "\n*\n*\n*")
     console.log("REQUEST BODY::: ", request.body, "\n*\n*\n*")
     console.log("Organizer Name: Ostrich Development")
-    console.log("REQUEST - Serial Number: ", request.body.serialNumber);
-    console.log("REQUEST - Header Body:", request.body.header);
-    console.log("REQUEST - Primary Body:", request.body.primary);
-    console.log("REQUEST - Secondary Body:", request.body.secondary);
-    console.log("REQUEST - Auxiliary Body:", request.body.secondary);
+    console.log("REQUEST - Serial Number: ", request.serialNumber);
+    console.log("REQUEST - Header :", request.header);
+    console.log("REQUEST - Primary :", request.primary);
+    console.log("REQUEST - Secondary :", request.secondary);
+    console.log("REQUEST - Auxiliary :", request.secondary);
     
 
     console.log("============================")
-
-    request = request.body
 
     // Create a PKPass Object that can be used in JS via Passkit-Generator
     const newPass = PKPass.from(
@@ -73,7 +72,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
             webServiceURL: "https://us-central1-apple-pass-test.cloudfunctions.net/pass",        // This is the webservice (API / Lambda) address where this program will be located
             description: "This is a test description!",
             logoText: "Logo Text Here",
-        organizationName: "Ostrich Development"
+            organizationName: "Ostrich Development"
         }
     )
     // After Raw Pass Generation
@@ -220,8 +219,8 @@ exports.pass = functions.https.onRequest( async(request, response) => {
                 // Save Failed
                 if (!error) {
                     console.log("Saved Successfully! \n Save to: ", saveFilePath);
-                    console.log("Returning body should include...")
-                    console.log(base64Data)
+                    console.log("Returning body should includea response of length...")
+                    console.log(base64Data.length)
                     // response.status(200).send({ pkpassData: base64Data, saveFilePath: saveFilePath });
                     response.status(200).send({ base64: base64Data });
                 } 

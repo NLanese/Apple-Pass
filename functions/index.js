@@ -51,6 +51,8 @@ exports.pass = functions.https.onRequest( async(request, response) => {
 
     console.log("============================")
 
+    request = request.body
+
     // Create a PKPass Object that can be used in JS via Passkit-Generator
     const newPass = PKPass.from(
     {
@@ -68,9 +70,7 @@ exports.pass = functions.https.onRequest( async(request, response) => {
         // this object is the second parameter in the FROM function
         // This holds the information you want to add / overwrite in the pass.json
         {   
-            authenticationToken: "29dd6ecd-8486-4641-9d5d-897a50cec8e8",                         // Authentication Token for safe entry and creation
             webServiceURL: "https://us-central1-apple-pass-test.cloudfunctions.net/pass",        // This is the webservice (API / Lambda) address where this program will be located
-            serialNumber: request.body.serialNumber ? request.body.serialNumber : "00000",                                                          // This needs to be unique per pass of the same Identifer
             description: "This is a test description!",
             logoText: "Logo Text Here",
         organizationName: "Ostrich Development"
@@ -81,87 +81,116 @@ exports.pass = functions.https.onRequest( async(request, response) => {
 
         console.log("Empty Pass Initialized...")
 
-        ////////////////////////
-        // Pass Customization //
-        ////////////////////////
+        ////////////////////////////
+        // Optional Pass Settings //
+        ////////////////////////////
+            if (request.serialNumber){
+                newPass.serialNumber = request.serialNumber
+            }
 
+            if (request.authenticationToken){
+                newPass.authenticationToken = request.authenticationToken
+            }
+
+            console.log("Optional configs added")
+
+        /////////////////
+        // Pass Fields //
+        /////////////////
+
+            // Adds to Header Field(s)
             console.log("Header Object From Request")
-            console.log(request.body.header)
+            console.log(request.header)
             newPass.headerFields.push(
                 {
-                    label: request.body.header[0].label,      // Finds the primaryFields.label value from the request
-                    value: request.body.header[0].value,       // Finds the primaryFields.value value from the request
-                    key: request.body.header[0].key
+                    label: request.header[0].label,      // Finds the primaryFields.label value from the request
+                    value: request.header[0].value,       // Finds the primaryFields.value value from the request
+                    key: request.header[0].key
                 },
-                (request.body.header.length > 1 ? ({
-                    label: request.body.header[1].label,      
-                    value: request.body.header[1].value, 
-                    key: request.body.header[1].key 
+                (request.header.length > 1 ? ({
+                    label: request.header[1].label,      
+                    value: request.header[1].value, 
+                    key: request.header[1].key 
                 }) : null)
             )
-
             console.log("Header added...")
 
-            // Adds to Primary Field
+            // Adds to Primary Field(s)
             newPass.primaryFields.push(
                 {
-                    label: request.body.primary[0].label,      // Finds the primaryFields.label value from the request
-                    value: request.body.primary[0].value,      // Finds the primaryFields.value value from the request
-                    key: request.body.primary[0].key
+                    label: request.primary[0].label,      // Finds the primaryFields.label value from the request
+                    value: request.primary[0].value,      // Finds the primaryFields.value value from the request
+                    key: request.primary[0].key
                 },
-                (request.body.primary.length > 1 ? ({
-                    label: request.body.primary[1].label,      
-                    value: request.body.primary[1].value, 
-                    key: request.body.primary[1].key
+                (request.primary.length > 1 ? ({
+                    label: request.primary[1].label,      
+                    value: request.primary[1].value, 
+                    key: request.primary[1].key
                 }) : null)
             )
-
             console.log("Primary added...")
 
-            // Adds to Secondary Field
+            // Adds to Secondary Field(s)
             newPass.secondaryFields.push(
                 {
-                    value: request.body.secondary[0].value,
-                    label: request.body.secondary[0].label, 
-                    key: request.body.secondary[0].key
+                    value: request.secondary[0].value,
+                    label: request.secondary[0].label, 
+                    key: request.secondary[0].key
                 },
-                (request.body.secondary.length > 1 ? ({
-                    label: request.body.secondary[1].label,      
-                    value: request.body.secondary[1].value, 
-                    key: request.body.secondary[1].key 
+                (request.secondary.length > 1 ? ({
+                    label: request.secondary[1].label,      
+                    value: request.secondary[1].value, 
+                    key: request.secondary[1].key 
                 }) : null)
             )
-
             console.log("Secondary added...")
 
-            // Adds to Auxiliary Fields
+            // Adds to Auxiliary Field(s)
             newPass.auxiliaryFields.push(
                 {
-                    value: request.body.auxiliary[0].value,
-                    label: request.body.auxiliary[0].label, 
-                    key: request.body.auxiliary[0].key
+                    value: request.auxiliary[0].value,
+                    label: request.auxiliary[0].label, 
+                    key: request.auxiliary[0].key
                 },
-                (request.body.header.length > 1 ? ({
-                    label: request.body.header[1].label,      
-                    value: request.body.header[1].value, 
-                    key: request.body.auxiliary[1].key 
+                (request.header.length > 1 ? ({
+                    label: request.header[1].label,      
+                    value: request.header[1].value, 
+                    key: request.auxiliary[1].key 
                 }) : null)
             )
-
             console.log("Auxiliary added...")
+  
 
-            // Sets Barcodes
-            newPass.setBarcodes({
-                message: request.body.miscData.barcode,
+        /////////////
+        // Barcode //
+        /////////////
+
+            console.log("Setting Barcodes")
+            newPass.setBarcodes(
+                {
+                message: `Member Name: ${request.miscData.firstName} ${request.miscData.lastName}\nMember Number: ${request.miscData.memberNumber}\nExpiration: ${request.miscData.expiration}`,
                 format: "PKBarcodeFormatQR",
-                altText: "11424771526"
-            })
+                }, 
+            );
+            console.log("Barcodes complete")
 
-        // If you want to Override the Images saved in the Pass Directory
-        // This uses Axios to retrieve any thumbnails sent through the request.
-        // const imageResponse = await axios.get(request.body.thumbnail, {responseType: 'arraybuffer'})
-        // const buffer = Buffer.from(imageResponse.data, "utf-8")
-        // newPass.addBuffer("thumbnail.png", buffer)
+        ////////////////
+        // Expiration //
+        ////////////////
+        
+            // Turns String into Date Object
+            let functionalExpiration = new Date(request.miscData.expiration)
+            
+            // Adds 2 months to expiraation as this is when the pass would be invalidated
+            let expMonth = functionalExpiration.getMonth() + 2
+            functionalExpiration.setMonth(expMonth)
+            
+            // printing
+            console.log("Functionl Expiration...")
+            console.log(functionalExpiration)
+            
+            // Sets the Pass Expiration
+            newPass.setExpirationDate(functionalExpiration)
 
         /////////////////////
         // Saving the Pass //

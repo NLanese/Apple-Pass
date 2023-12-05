@@ -10,3 +10,4 @@ in tbe parent directory. For more in-depth log commands, use the
      `firebase help functions:log` command
 Or, more simply, use 
      `firebase functions:log --only functions` to see all the logs
+     `firebase functions:log --only functions -n, --lines <num-lines>` to print specifically n lines

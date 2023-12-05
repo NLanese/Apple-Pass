@@ -36,20 +36,17 @@ const {wwdr, signerCert, signerKey} = getCertificates()
 ///////////////////
 // MAIN FUNCTION //
 ///////////////////
-exports.pass = functions.https.onRequest(async(request, response) => {
-
+exports.pass = functions.https.onRequest((request, response) => {
 
     console.log("============================")
-    console.log("FULL REQUEST::::", request, "\n*\n*\n*")
+    // console.log("FULL REQUEST::::", request, "\n*\n*\n*")
     console.log("REQUEST BODY::: ", request.body, "\n*\n*\n*")
     console.log("Organizer Name: Ostrich Development")
-    console.log("REQUEST - Serial Number: ", request.serialNumber);
-    console.log("REQUEST - Header :", request.header);
-    console.log("REQUEST - Primary :", request.primary);
-    console.log("REQUEST - Secondary :", request.secondary);
-    console.log("REQUEST - Auxiliary :", request.secondary);
-    
-
+    console.log("REQUEST - Serial Number: ", request.body.serialNumber);
+    console.log("REQUEST - Header :", request.body.header);
+    console.log("REQUEST - Primary :", request.body.primary);
+    console.log("REQUEST - Secondary :", request.body.secondary);
+    console.log("REQUEST - Auxiliary :", request.body.auxiliary);
     console.log("============================")
 
     // Create a PKPass Object that can be used in JS via Passkit-Generator
